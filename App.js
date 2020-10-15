@@ -1,21 +1,62 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import AccountScreen from './src/screens/AccountScreen';
+import CreateScreen from './src/screens/CreateScreen';
+import DetailScreen from './src/screens/DetailScreen';
+import ListScreen from './src/screens/ListScreen';
+import SigninScreen from './src/screens/SigninScreen';
+import SignupScreen from './src/screens/SignupScreen';
 
-export default function App() {
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+const ListStack = createStackNavigator();
+
+function listFlow() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ListStack.Navigator initialRouteName='List'>
+      <ListStack.Screen name='List' component={ListScreen} />
+      <ListStack.Screen name='Detail' component={DetailScreen} />
+    </ListStack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function mainFlow() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name='List' component={listFlow} />
+      <Tab.Screen name='Create' component={CreateScreen} />
+      <Tab.Screen name='Account' component={AccountScreen} />
+    </Tab.Navigator>
+  );
+}
+
+function App() {
+  const isLoggedIn = false;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Signup'>
+        {!isLoggedIn ? (
+          <>
+            <Stack.Screen
+              name='Signin'
+              component={SigninScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='Signup'
+              component={SignupScreen}
+              options={{ headerShown: false }}
+            />
+          </>
+        ) : (
+          <Stack.Screen name='Main' component={mainFlow} />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;
