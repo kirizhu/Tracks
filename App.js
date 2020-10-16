@@ -9,6 +9,7 @@ import DetailScreen from './src/screens/DetailScreen';
 import ListScreen from './src/screens/ListScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import SignupScreen from './src/screens/SignupScreen';
+import { Provider as AuthProvider } from './src/context/authContext';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,27 +37,37 @@ function mainFlow() {
 function App() {
   const isLoggedIn = false;
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Signup'>
-        {!isLoggedIn ? (
-          <>
-            <Stack.Screen
-              name='Signin'
-              component={SigninScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name='Signup'
-              component={SignupScreen}
-              options={{ headerShown: false }}
-            />
-          </>
-        ) : (
-          <Stack.Screen name='Main' component={mainFlow} />
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName='Signup'>
+          {!isLoggedIn ? (
+            <>
+              <Stack.Screen
+                name='Signin'
+                component={SigninScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name='Signup'
+                component={SignupScreen}
+                options={{ headerShown: false }}
+              />
+            </>
+          ) : (
+            <Stack.Screen name='Main' component={mainFlow} />
+          )}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
 
 export default App;
+
+// export default () => {
+//   return (
+//     <AuthProvider>
+//       <App />
+//     </AuthProvider>
+//   );
+// };

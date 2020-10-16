@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,6 +9,8 @@ import { Text, Input, Button } from 'react-native-elements';
 import Spacer from '../components/Spacer';
 
 const SignupScreen = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   return (
     <KeyboardAvoidingView style={styles.flexGrow}>
       <ScrollView style={styles.contentContainerStyle}>
@@ -20,10 +22,23 @@ const SignupScreen = () => {
           </Spacer>
           <Spacer />
           <Spacer>
-            <Input label='Email' />
+            <Input
+              label='Email'
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize='none'
+              autoCorrect={false}
+            />
           </Spacer>
           <Spacer>
-            <Input label='Password' />
+            <Input
+              label='Password'
+              value={password}
+              onChangeText={setPassword}
+              autoCapitalize='none'
+              autoCorrect={false}
+              secureTextEntry
+            />
           </Spacer>
         </View>
       </ScrollView>
