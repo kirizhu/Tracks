@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,7 +9,9 @@ import DetailScreen from './src/screens/DetailScreen';
 import ListScreen from './src/screens/ListScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import SignupScreen from './src/screens/SignupScreen';
-import { Provider as AuthProvider } from './src/context/authContext';
+import { Provider as AuthProvider } from './src/context/AuthContext';
+import { Context as AuthContext } from './src/context/AuthContext';
+import { navigationRef } from './src/RootNavigation';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,39 +37,35 @@ function mainFlow() {
 }
 
 function App() {
-  const isLoggedIn = false;
+  const { state } = useContext(AuthContext);
   return (
-    <AuthProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName='Signup'>
-          {!isLoggedIn ? (
-            <>
-              <Stack.Screen
-                name='Signin'
-                component={SigninScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name='Signup'
-                component={SignupScreen}
-                options={{ headerShown: false }}
-              />
-            </>
-          ) : (
-            <Stack.Screen name='Main' component={mainFlow} />
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AuthProvider>
+    <NavigationContainer ref={navigationRef}>
+      <Stack.Navigator initialRouteName='Signup'>
+        {!state.token ? (
+          <>
+            <Stack.Screen
+              name='Signin'
+              component={SigninScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='Signup'
+              component={SignupScreen}
+              options={{ headerShown: false }}
+            />
+          </>
+        ) : (
+          <Stack.Screen name='Main' component={mainFlow} />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-export default App;
-
-// export default () => {
-//   return (
-//     <AuthProvider>
-//       <App />
-//     </AuthProvider>
-//   );
-// };
+export default () => {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+};

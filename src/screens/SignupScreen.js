@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
   KeyboardAvoidingView,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import { Text, Input, Button } from 'react-native-elements';
 import Spacer from '../components/Spacer';
+import { Context as AuthContext } from '../context/AuthContext';
 
-const SignupScreen = () => {
+const SignupScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { state, signup } = useContext(AuthContext);
   return (
     <KeyboardAvoidingView style={styles.flexGrow}>
       <ScrollView style={styles.contentContainerStyle}>
@@ -20,7 +23,7 @@ const SignupScreen = () => {
               Sign Up for Tracks
             </Text>
           </Spacer>
-          <Spacer />
+
           <Spacer>
             <Input
               label='Email'
@@ -29,8 +32,7 @@ const SignupScreen = () => {
               autoCapitalize='none'
               autoCorrect={false}
             />
-          </Spacer>
-          <Spacer>
+
             <Input
               label='Password'
               value={password}
@@ -39,12 +41,21 @@ const SignupScreen = () => {
               autoCorrect={false}
               secureTextEntry
             />
+            {state.errorMessage ? (
+              <Text style={styles.errorMessage}>{state.errorMessage}</Text>
+            ) : null}
+          </Spacer>
+          <Spacer>
+            <TouchableOpacity onPress={() => navigation.navigate('Signin')}>
+              <Text style={styles.signinLink}>
+                Alredy have an account? Sign in instead
+              </Text>
+            </TouchableOpacity>
           </Spacer>
         </View>
       </ScrollView>
-
       <View style={styles.buttonWrapper}>
-        <Button title='Sign Up' />
+        <Button title='Sign Up' onPress={() => signup({ email, password })} />
       </View>
     </KeyboardAvoidingView>
   );
@@ -69,6 +80,17 @@ const styles = StyleSheet.create({
   buttonWrapper: {
     marginBottom: 30,
     marginHorizontal: 10,
+    marginTop: -15,
+  },
+  errorMessage: {
+    fontSize: 16,
+    color: 'red',
+    marginHorizontal: 10,
     marginTop: -20,
+  },
+  signinLink: {
+    fontSize: 16,
+    color: 'blue',
+    marginHorizontal: 10,
   },
 });
