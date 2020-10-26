@@ -9,6 +9,7 @@ import DetailScreen from './src/screens/DetailScreen';
 import ListScreen from './src/screens/ListScreen';
 import SigninScreen from './src/screens/SigninScreen';
 import SignupScreen from './src/screens/SignupScreen';
+import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Context as AuthContext } from './src/context/AuthContext';
 import { navigationRef } from './src/RootNavigation';
@@ -28,7 +29,7 @@ function listFlow() {
 
 function mainFlow() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName='List'>
       <Tab.Screen name='List' component={listFlow} />
       <Tab.Screen name='Create' component={CreateScreen} />
       <Tab.Screen name='Account' component={AccountScreen} />
@@ -38,9 +39,10 @@ function mainFlow() {
 
 function App() {
   const { state } = useContext(AuthContext);
+
   return (
     <NavigationContainer ref={navigationRef}>
-      <Stack.Navigator initialRouteName='Signup'>
+      <Stack.Navigator initialRouteName='Resolve'>
         {!state.token ? (
           <>
             <Stack.Screen
@@ -51,6 +53,11 @@ function App() {
             <Stack.Screen
               name='Signup'
               component={SignupScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name='Resolve'
+              component={ResolveAuthScreen}
               options={{ headerShown: false }}
             />
           </>

@@ -1,11 +1,25 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useContext } from 'react';
+import { StyleSheet } from 'react-native';
+import AuthForm from '../components/AuthForm';
+import { Context as AuthContext } from '../context/AuthContext';
 
-const SigninScreen = () => {
+const SigninScreen = ({ navigation }) => {
+  const { state, signin, clearError } = useContext(AuthContext);
+  useEffect(() => {
+    const listener = navigation.addListener('blur', () => {
+      clearError();
+    });
+    return listener;
+  }, [navigation]);
   return (
-    <View>
-      <Text></Text>
-    </View>
+    <AuthForm
+      headerText='Sign in for Tracks'
+      errorMessage={state.errorMessage}
+      buttonText='Sign In'
+      onSubmit={signin}
+      routeName='Signup'
+      navText='Don´t have an account? Sign up instead'
+    />
   );
 };
 
