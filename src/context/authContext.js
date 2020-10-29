@@ -12,6 +12,8 @@ const authReducer = (state, action) => {
       return { errorMessage: '', token: action.payload };
     case 'clear_error':
       return { ...state, errorMessage: '' };
+    case 'signout':
+      return { token: null };
     default:
       return state;
       break;
@@ -58,8 +60,10 @@ const signin = (dispatch) => async ({ email, password }) => {
   }
 };
 
-const signout = (dispatch) => () => {
-  //Try to signout
+const signout = (dispatch) => async () => {
+  await AsyncStorage.removeItem('token');
+  dispatch({ type: 'signout' });
+  navigate('Signup');
 };
 
 const clearError = (dispatch) => () => {

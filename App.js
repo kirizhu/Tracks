@@ -21,7 +21,11 @@ const ListStack = createStackNavigator();
 function listFlow() {
   return (
     <ListStack.Navigator initialRouteName='List'>
-      <ListStack.Screen name='List' component={ListScreen} />
+      <ListStack.Screen
+        name='List'
+        component={ListScreen}
+        options={{ headerShown: false }}
+      />
       <ListStack.Screen name='Detail' component={DetailScreen} />
     </ListStack.Navigator>
   );
@@ -62,7 +66,11 @@ function App() {
             />
           </>
         ) : (
-          <Stack.Screen name='Main' component={mainFlow} />
+          <Stack.Screen
+            name='Main'
+            component={mainFlow}
+            options={{ headerShown: false }}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>
