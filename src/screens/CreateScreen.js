@@ -1,5 +1,5 @@
-// import '../_mockLocations';
-import React, { useState, useEffect } from 'react';
+import '../_mockLocations';
+import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import Spacer from '../components/Spacer';
@@ -10,8 +10,10 @@ import {
   watchPositionAsync,
   Accuracy,
 } from 'expo-location';
+import { Context as LocationContext } from '../context/LocationContext';
 
 const CreateScreen = () => {
+  const { addLocation } = useContext(LocationContext);
   const [err, setErr] = useState('');
 
   const startWatching = async () => {
@@ -27,7 +29,7 @@ const CreateScreen = () => {
           distanceInterval: 10,
         },
         (location) => {
-          console.log(location);
+          addLocation(location);
         }
       );
     } catch (err) {
