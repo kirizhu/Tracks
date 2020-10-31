@@ -1,45 +1,16 @@
 import '../_mockLocations';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import Spacer from '../components/Spacer';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Map from '../components/Map';
-import {
-  requestPermissionsAsync,
-  watchPositionAsync,
-  Accuracy,
-} from 'expo-location';
 import { Context as LocationContext } from '../context/LocationContext';
+import useLocation from '../hooks/useLocation';
 
 const CreateScreen = () => {
   const { addLocation } = useContext(LocationContext);
-  const [err, setErr] = useState('');
-
-  const startWatching = async () => {
-    try {
-      const { granted } = await requestPermissionsAsync();
-      if (!granted) {
-        throw new Error('Location permission not granted');
-      }
-      await watchPositionAsync(
-        {
-          accuracy: Accuracy.BestForNavigation,
-          timeInterval: 1000,
-          distanceInterval: 10,
-        },
-        (location) => {
-          addLocation(location);
-        }
-      );
-    } catch (err) {
-      setErr(err);
-    }
-  };
-
-  useEffect(() => {
-    startWatching();
-  }, []);
+  const [err] = useLocation(addLocation);
 
   return (
     <SafeAreaView>
