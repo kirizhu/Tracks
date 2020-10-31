@@ -12,6 +12,7 @@ import SignupScreen from './src/screens/SignupScreen';
 import ResolveAuthScreen from './src/screens/ResolveAuthScreen';
 import { Provider as AuthProvider } from './src/context/AuthContext';
 import { Context as AuthContext } from './src/context/AuthContext';
+import { Provider as LocationProvider } from './src/context/LocationContext';
 import { navigationRef } from './src/RootNavigation';
 
 const Stack = createStackNavigator();
@@ -79,8 +80,10 @@ function App() {
 
 export default () => {
   return (
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <LocationProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </LocationProvider>
   );
 };
