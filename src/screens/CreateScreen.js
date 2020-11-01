@@ -11,17 +11,20 @@ import useLocation from '../hooks/useLocation';
 import { useIsFocused } from '@react-navigation/native';
 
 const CreateScreen = () => {
-  const { state, addLocation } = useContext(LocationContext);
+  const {
+    state: { recording },
+    addLocation,
+  } = useContext(LocationContext);
 
   const callback = useCallback(
     (location) => {
-      addLocation(location, state.recording);
+      addLocation(location, recording);
     },
-    [state.recording]
+    [recording]
   );
 
   const isFocused = useIsFocused();
-  const [err] = useLocation(isFocused, callback);
+  const [err] = useLocation(isFocused || recording, callback);
 
   return (
     <SafeAreaView>
