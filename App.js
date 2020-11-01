@@ -34,7 +34,10 @@ function listFlow() {
 
 function mainFlow() {
   return (
-    <Tab.Navigator initialRouteName='List'>
+    <Tab.Navigator
+      initialRouteName='List'
+      tabBarOptions={{ keyboardHidesTabBar: true }}
+    >
       <Tab.Screen name='List' component={listFlow} />
       <Tab.Screen name='Create' component={CreateScreen} />
       <Tab.Screen name='Account' component={AccountScreen} />
