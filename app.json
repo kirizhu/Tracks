@@ -21,6 +21,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "React Native Expo application. Makes use of the device location service so that it can create tracks on a map where the user has been walking/cycling etc.",
+    "githubUrl": "https://github.com/kirizhu/Tracks"
   }
 }
