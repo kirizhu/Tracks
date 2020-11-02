@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Button, Input } from 'react-native-elements';
 import { Context as LocationContext } from '../context/LocationContext';
+import Spacer from './Spacer';
+import useSaveTrack from '../hooks/useSaveTrack';
 const TrackForm = () => {
   const {
     state: { name, recording, locations },
@@ -8,7 +10,8 @@ const TrackForm = () => {
     stopRecording,
     changeName,
   } = useContext(LocationContext);
-  console.log(locations.length);
+
+  const [saveTrack] = useSaveTrack();
   return (
     <>
       <Input
@@ -21,6 +24,10 @@ const TrackForm = () => {
       ) : (
         <Button title='Start Recording' onPress={startRecording} />
       )}
+      <Spacer />
+      {!recording && locations.length ? (
+        <Button title='Save Recording' onPress={saveTrack} />
+      ) : null}
     </>
   );
 };
