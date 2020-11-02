@@ -34,3 +34,4 @@ Or visit this link from your mobile device:
 Future imporvements:
 
 - Add more and improve on styling
+- Fix bugged delete request
