@@ -29,7 +29,9 @@ const ListScreen = ({ navigation }) => {
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => {
           return (
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Detail', { _id: item._id })}
+            >
               <ListItem>
                 <ListItem.Content>
                   <ListItem.Title>{item.name}</ListItem.Title>
