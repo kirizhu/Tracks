@@ -8,7 +8,7 @@ Show gps tracks on a map or from a list,
 Delete them as well.
 
 ![Alt text](assets/sc1.jpg?raw=true 'Signup Screen')![Alt text](assets/sc2.jpg?raw=true 'Signin Screen')![Alt text](assets/sc3.jpg?raw=true 'List Screen')![Alt text](assets/sc4.jpg?raw=true 'Create Screen')
-[Alt text](assets/sc5.jpg?raw=true 'Detail Screen')
+![Alt text](assets/sc5.jpg?raw=true 'Detail Screen')
 
 To use the application follow below steps
 
